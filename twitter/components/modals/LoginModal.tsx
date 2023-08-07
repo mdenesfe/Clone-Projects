@@ -6,13 +6,13 @@ import Modal from "../Modal";
 const LoginModal = () => {
     const loginModal = useLoginModal();
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [isLoading, setIsLoading] = useState(false)
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const onSubmit = useCallback(async () => {
         try {
-            setIsLoading(true)
+            setIsLoading(true);
 
             // Login
             
@@ -34,7 +34,7 @@ const LoginModal = () => {
                 disabled={isLoading}
             />
             <Input 
-                placeholder="Şifre"
+                placeholder="Password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 disabled={isLoading}
@@ -48,8 +48,8 @@ const LoginModal = () => {
         <Modal
             disabled={isLoading}
             isOpen={loginModal.isOpen}
-            title="Giriş Yap"
-            actionLabel="Kayıt Ol"
+            title="Log In"
+            actionLabel="Sign Up"
             onClose={loginModal.onClose}
             onSubmit={onSubmit}
             body={bodyContent}
