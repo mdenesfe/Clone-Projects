@@ -18,7 +18,9 @@ const Button: React.FC<ButtonProps> = ({
     outline
 }) => {
     return ( 
-        <button 
+        <button
+            disabled={disabled}
+            onClick={onClick}
             className={`
             disabled:opacity-70
             disabled:cursor-not-allowed
