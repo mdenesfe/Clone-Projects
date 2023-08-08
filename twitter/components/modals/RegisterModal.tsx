@@ -4,12 +4,15 @@ import Input from "../Input";
 import Modal from "../Modal";
 import useRegisterModal from "@/hooks/useRegisterModal";
 
-const LoginModal = () => {
+const RegisterModal = () => {
     const loginModal = useLoginModal();
     const registerModal = useRegisterModal();
 
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     const onToggle = useCallback(() => {
@@ -17,17 +20,17 @@ const LoginModal = () => {
             return;
         }
 
-        loginModal.onClose();
-        registerModal.onOpen();
+        registerModal.onClose();
+        loginModal.onOpen();
     }, [isLoading, registerModal, loginModal]);
 
     const onSubmit = useCallback(async () => {
         try {
             setIsLoading(true);
 
-            // Login
+            // register and login
             
-            loginModal.onClose();
+            registerModal.onClose();
 
         } catch (error) {
             console.log(error); 
@@ -45,6 +48,18 @@ const LoginModal = () => {
                 disabled={isLoading}
             />
             <Input 
+                placeholder="İsim"
+                onChange={(e) => setName(e.target.value)}
+                value={password}
+                disabled={isLoading}
+            />
+            <Input 
+                placeholder="Kullanıcı Adı"
+                onChange={(e) => setUsername(e.target.value)}
+                value={password}
+                disabled={isLoading}
+            />
+            <Input 
                 placeholder="Şifre"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
@@ -57,7 +72,7 @@ const LoginModal = () => {
 
     const footerContent = (
         <div className="text-neutral-400 text-center mt-4">
-            <p>Hesabınız Yok Mu? 
+            <p>Zaten Hesabım Var. 
                 <span
                     onClick={onToggle}
                     className="
@@ -66,7 +81,7 @@ const LoginModal = () => {
                         hover:underline
                     "
                 >
-                    Hesap Oluştur
+                    Giriş Yap
                 </span>
             </p>
         </div>
@@ -75,10 +90,10 @@ const LoginModal = () => {
     return (
         <Modal
             disabled={isLoading}
-            isOpen={loginModal.isOpen}
-            title="Giriş Yap"
-            actionLabel="Giriş Yap"
-            onClose={loginModal.onClose}
+            isOpen={registerModal.isOpen}
+            title="Hesap Oluştur"
+            actionLabel="Kayıt Ol"
+            onClose={registerModal.onClose}
             onSubmit={onSubmit}
             body={bodyContent}
             footer={footerContent}
@@ -86,4 +101,4 @@ const LoginModal = () => {
      );
 }
  
-export default LoginModal;
+export default RegisterModal;
