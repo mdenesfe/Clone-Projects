@@ -3,6 +3,9 @@ import { useCallback, useState } from 'react';
 import Input from "../Input";
 import Modal from "../Modal";
 import useRegisterModal from "@/hooks/useRegisterModal";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import {signIn} from "next-auth/react";
 
 const RegisterModal = () => {
     const loginModal = useLoginModal();
@@ -28,16 +31,29 @@ const RegisterModal = () => {
         try {
             setIsLoading(true);
 
-            // register and login
+            await axios.post('/api/register', {
+                email,
+                password,
+                username,
+                name
+            });
+
+            toast.success('Hesap Oluşturuldu.');
+
+            signIn('credentials', {
+                email,
+                password
+            });
             
             registerModal.onClose();
 
         } catch (error) {
-            console.log(error); 
+            console.log(error);
+            toast.error('Bir şeyler ters gitti');
         } finally {
            setIsLoading(false);
         }
-    }, [loginModal]);
+    }, [registerModal, email, password, username, name]);
 
     const bodyContent = (
         <div className="flex flex-col gap-4">
@@ -50,17 +66,18 @@ const RegisterModal = () => {
             <Input 
                 placeholder="İsim"
                 onChange={(e) => setName(e.target.value)}
-                value={password}
+                value={name}
                 disabled={isLoading}
             />
             <Input 
                 placeholder="Kullanıcı Adı"
                 onChange={(e) => setUsername(e.target.value)}
-                value={password}
+                value={username}
                 disabled={isLoading}
             />
             <Input 
                 placeholder="Şifre"
+                type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 disabled={isLoading}
